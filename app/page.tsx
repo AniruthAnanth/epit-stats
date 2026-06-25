@@ -19,8 +19,6 @@ export default function Home() {
             style={{ color: 'var(--color-text-primary)' }}
           >
             <span className="whitespace-nowrap">{chapter.title}</span>
-            <span className="flex-1 border-b border-dotted mx-2 min-w-8"></span>
-            <span className="whitespace-nowrap">{chapter.date}</span>
           </Link>
         ))}
       </div>
