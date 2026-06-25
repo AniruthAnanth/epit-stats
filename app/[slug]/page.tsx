@@ -33,7 +33,7 @@ export default async function ChapterPage({ params }: { params: Promise<{ slug: 
       }}>
         <div className="pr-8 pl-8"><ChapterNavBar prev={prev} next={next} /></div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_250px] gap-12 mt-4 mb-4 pl-8 bg-[var(--color-bg-primary)]">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_250px] gap-12 mt-4 mb-4 pl-8 bg-[var(--color-bg-primary)] pr-8 sm:pr-0">
           <article>
             <header className="mb-6 border-left border-gray-300 border-l-4 pl-4 mt-8">
               {/* <div className="text-sm text-gray-500 mb-1">Module {frontMatter.module}</div> */}
