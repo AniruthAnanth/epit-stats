@@ -1,0 +1,394 @@
+---
+title: Variables, Types, and Control Flow
+description: The grammar of Python
+module: 0
+order: 1
+date: June 25th, 2026
+---
+
+If the last chapter was about setting up your kitchen, this one is about learning to cook. We're going to cover the absolute fundamentals of Python—how to store values, what kinds of values exist, and how to make your code make decisions. None of this is specific to statistics. It's just the grammar you need before you can say anything interesting.
+
+## Variables
+
+A variable is a name that points to a value. That's it.
+
+```python
+age = 34
+name = "Maria"
+height = 5.9
+```
+
+You just created three variables. `age` holds the number `34`, `name` holds the text `"Maria"`, and `height` holds `5.9`. You can now use those names anywhere in your code and Python will substitute the value in.
+
+```python
+print(name)   # Maria
+print(age)    # 34
+```
+
+The `=` sign here doesn't mean "equals" the way it does in math. It means "take the thing on the right and store it under the name on the left." You'll hear this called **assignment**.
+
+You can reassign a variable at any time:
+
+```python
+age = 34
+age = 35
+print(age)   # 35
+```
+
+The old value is just gone. Python doesn't complain.
+
+## Types
+
+Every value in Python has a **type.** a category that describes what kind of thing it is. The ones you'll use constantly:
+
+| Type | Example | What it is |
+|---|---|---|
+| `int` | `42` | A whole number |
+| `float` | `3.14` | A number with a decimal |
+| `str` | `"hello"` | Text (short for "string") |
+| `bool` | `True` or `False` | A yes/no value |
+
+You can always check the type of something with `type()`:
+
+```python
+print(type(42))       # <class 'int'>
+print(type("hello"))  # <class 'str'>
+print(type(3.14))     # <class 'float'>
+print(type(True))     # <class 'bool'>
+```
+
+Types matter because Python treats them differently. You can add two numbers together. You can also "add" two strings together, which just glues them:
+
+```python
+print(3 + 4)           # 7
+print("cat" + "dog")   # catdog
+```
+
+But you can't add a number and a string:
+
+```python
+print(3 + "hello")   # TypeError
+```
+
+Python will throw an error and stop. This is a good thing—it means you found a bug.
+
+<Aside>
+`True` and `False` are capitalized in Python. `true` and `false` (lowercase) will throw an error. This trips everyone up at least once.
+</Aside>
+
+### Strings
+
+Strings deserve a bit more attention because you'll work with them constantly—for column names, labels, file paths, and printed output.
+
+You can use single or double quotes, as long as you're consistent:
+
+```python
+a = "hello"
+b = 'hello'   # same thing
+```
+
+To include a variable inside a string, use an **f-string**. Put an `f` before the opening quote and wrap the variable in curly braces:
+
+```python
+name = "Maria"
+age = 34
+print(f"{name} is {age} years old.")   # Maria is 34 years old.
+```
+
+You'll use f-strings constantly. They're one of the nicest things about modern Python.
+
+## Lists
+
+A list holds multiple values in order:
+
+```python
+ages = [34, 28, 45, 51, 39]
+diagnoses = ["hypertension", "diabetes", "COPD"]
+```
+
+You access individual items by their **index.** their position in the list. Python starts counting at zero:
+
+```python
+print(ages[0])   # 34
+print(ages[1])   # 28
+print(ages[-1])  # 39  (negative indexes count from the end)
+```
+
+<Aside>
+Zero-indexing—where the first item is at position 0, not 1—is one of the most common sources of confusion for beginners. You'll make off-by-one errors. Everyone does. It gets automatic with time.
+</Aside>
+
+You can check how many items are in a list with `len()`:
+
+```python
+print(len(ages))   # 5
+```
+
+And add to one with `.append()`:
+
+```python
+ages.append(60)
+print(ages)   # [34, 28, 45, 51, 39, 60]
+```
+
+## Control Flow
+
+So far, every line of code runs top to bottom, once. Control flow lets you change that—run some code only if a condition is true, or run a chunk of code repeatedly.
+
+### If/Else
+
+```python
+age = 67
+
+if age >= 65:
+    print("Eligible for Medicare")
+else:
+    print("Not yet eligible")
+```
+
+Read it out loud and it makes sense. If `age` is 65 or older, print one thing. Otherwise, print the other.
+
+The colon at the end of the `if` line is required. The indented block underneath is what runs when the condition is true. Python uses indentation—not curly braces like many other languages—to define these blocks. Four spaces is the convention.
+
+You can chain conditions with `elif` (short for "else if"):
+
+```python
+sbp = 135   # systolic blood pressure
+
+if sbp < 120:
+    print("Normal")
+elif sbp < 130:
+    print("Elevated")
+elif sbp < 140:
+    print("High—Stage 1")
+else:
+    print("High—Stage 2")
+```
+
+Python checks each condition in order and runs the first block that's true. The `else` at the end catches everything that didn't match.
+
+### Comparison Operators
+
+Inside your `if` statements, you'll use these:
+
+| Operator | Meaning |
+|---|---|
+| `==` | Equal to |
+| `!=` | Not equal to |
+| `>` | Greater than |
+| `<` | Less than |
+| `>=` | Greater than or equal to |
+| `<=` | Less than or equal to |
+
+<Aside>
+`=` and `==` are completely different things. `=` assigns a value to a variable. `==` checks whether two things are equal. Writing `if age = 65` instead of `if age == 65` is a syntax error Python will catch, but confusing the two is extremely common early on.
+</Aside>
+
+You can combine conditions with `and` and `or`:
+
+```python
+age = 70
+smoker = True
+
+if age > 65 and smoker:
+    print("High cardiovascular risk")
+```
+
+### Loops
+
+A for loop runs a block of code once for each item in a list:
+
+```python
+patients = ["Alice", "Bob", "Carlos", "Diana"]
+
+for patient in patients:
+    print(f"Processing {patient}")
+```
+
+```
+Processing Alice
+Processing Bob
+Processing Carlos
+Processing Diana
+```
+
+The variable `patient` takes on each value in the list, one at a time. You can name it whatever you want—the name is just for use inside the loop.
+
+If you want to loop a specific number of times, use `range()`:
+
+```python
+for i in range(5):
+    print(i)
+```
+
+```
+0
+1
+2
+3
+4
+```
+
+`range(5)` generates the numbers 0 through 4. Again, starts at zero.
+
+### While Loops
+
+A `for` loop runs once for each item in a list. A `while` loop runs for as long as a condition is true:
+
+```python
+count = 0
+
+while count < 5:
+    print(count)
+    count = count + 1
+```
+
+```
+0
+1
+2
+3
+4
+```
+
+Each time through, Python checks the condition. If it's still true, it runs the block again. If it's false, it stops.
+
+The thing to watch out for is the **infinite loop**—a while loop whose condition never becomes false:
+
+```python
+while True:
+    print("this runs forever")
+```
+
+If you accidentally run one, `Ctrl + C` in the terminal will kill it.
+
+In practice, you'll use `for` loops far more often than `while` loops. A `while` loop is useful when you don't know ahead of time how many times you need to repeat something—waiting for a file to finish downloading, retrying a failed request, or running a simulation until it converges. For iterating over data, stick to `for`.
+
+### To Loop or Not To Loop?
+
+Loops are powerful but slow in Python, especially on large datasets. Most of the time when you're working with data, you'll use library functions that operate on entire columns at once—we'll get to that in the next chapter. For now, just know that if you find yourself writing a loop to compute something on every row of a dataset, there's probably a faster way.
+
+## Functions
+
+You've already used functions—`print()`, `len()`, `type()`. Now let's write our own.
+
+A function is a named, reusable block of code:
+
+```python
+def bmi(weight_kg, height_m):
+    return weight_kg / (height_m ** 2)
+```
+
+`def` tells Python you're defining a function. `bmi` is the name. `weight_kg` and `height_m` are **parameters.** the inputs the function expects. The `return` line sends a value back to whoever called the function.
+
+Call it like this:
+
+```python
+result = bmi(70, 1.75)
+print(result)   # 22.86
+```
+
+Functions are the primary way you avoid repeating yourself. If you're copying and pasting the same code in three places, it should probably be a function.
+
+<Aside>
+`**` is Python's exponentiation operator. `height_m ** 2` means height squared. `2 ** 10` is 1024.
+</Aside>
+
+A function doesn't have to return anything. Sometimes you just want to package up a sequence of steps:
+
+```python
+def print_patient_summary(name, age, diagnosis):
+    print(f"Patient: {name}")
+    print(f"Age: {age}")
+    print(f"Diagnosis: {diagnosis}")
+
+print_patient_summary("Maria", 34, "hypertension")
+```
+
+```
+Patient: Maria
+Age: 34
+Diagnosis: hypertension
+```
+
+## Putting It Together
+
+Here's a small program that uses everything from this chapter:
+
+<Aside>
+Is there a better way to write this loop, maybe one that's more intuitive? Experiment!
+</Aside>
+
+```python
+def classify_bmi(weight_kg, height_m):
+    bmi = weight_kg / (height_m ** 2)
+
+    if bmi < 18.5:
+        category = "Underweight"
+    elif bmi < 25:
+        category = "Normal"
+    elif bmi < 30:
+        category = "Overweight"
+    else:
+        category = "Obese"
+
+    return bmi, category
+
+
+patients = [
+    ("Alice", 55, 1.65),
+    ("Bob", 95, 1.80),
+    ("Carlos", 72, 1.72),
+]
+
+for name, weight, height in patients:
+    bmi, category = classify_bmi(weight, height)
+    print(f"{name}: BMI = {bmi:.1f} ({category})")
+```
+
+```
+Alice: BMI = 20.2 (Normal)
+Bob: BMI = 29.3 (Overweight)
+Carlos: BMI = 24.3 (Normal)
+```
+
+A few things here you haven't seen yet: tuples (the parentheses inside the list) are like lists but immutable—you can't change them after creation, which makes them useful for fixed records like a patient's data. And `{bmi:.1f}` inside the f-string formats the number to one decimal place. Neither of those are critical to understand right now.
+
+## Homework
+
+**Exercise 1.** Write a function called `classify_bp` that takes a systolic blood pressure value and returns `"Normal"`, `"Elevated"`, `"Stage 1"`, or `"Stage 2"` using the thresholds from earlier in this chapter. Test it on at least four values.
+
+**Exercise 2.** Create a list of five ages. Write a for loop that prints each age and whether the patient is a "pediatric" patient (under 18), an "adult" (18–64), or a "geriatric" patient (65 and older).
+
+**Exercise 3.** Write a function called `egfr_stage` that takes a GFR value and returns the corresponding CKD stage as a string (`"G1"` through `"G5"`). If you're not familiar with GFR staging, [this table](https://www.kidney.org/atoz/content/gfr) has the thresholds. The point is to practice translating a clinical rule into code.
+
+## Going Deeper
+
+### Python has Grammar
+
+Every language—spoken or programming—has a grammar. Python's is small. In fact, almost everything you'll ever write in Python is a combination of just a few things:
+
+- **Values.** the nouns. Numbers, strings, booleans, lists.
+- **Expressions.** combinations of values that evaluate to something. `age + 1`, `bmi > 30`, `"Patient: " + name`.
+- **Statements.** the sentences. Assignment, `if`, `for`, `def`. They don't produce a value, they *do* something.
+- **Functions.** reusable named chunks of statements.
+
+That's most of it. The rest is just learning which words Python uses for what. When something confuses you, try to identify which of these four things it is. It usually helps.
+
+### Lifting the Hood: How does Python work?
+
+If you ever want to understand what's actually happening when Python runs your code—how it reads your text file, what it does with all those variables, why types exist at all—Robert Nystrom's [Crafting Interpreters](https://craftinginterpreters.com/) is the best resource I've ever read on the subject. It's free online, beautifully written, and builds a working programming language from scratch. It's well outside the scope of this course, but if you finish these chapters and find yourself curious about what's underneath, that's where to go.
+
+### Using ChatGPT for Syntax
+
+AI assistants are genuinely useful for learning syntax—with one important caveat.
+
+Use them to *explain* code, not to *write* it for you. The best prompt is not "write me a function that classifies BMI"—it's "I wrote this function and I don't understand why it's returning `None`, can you explain what's happening?" or "what does `**` do in Python?" That way you're using it as a patient tutor who's available at 2am, not as a way to skip the part where you actually learn.
+
+A few prompts that work well at this stage:
+
+- *"Explain this line of Python to me like I've been coding for two weeks:"* followed by the line.
+- *"I got this error: [paste error]. Here's my code: [paste code]. What's wrong?"*
+- *"What's the difference between `=` and `==` in Python?"*
+
+The moment you start copying and pasting code you don't understand, you're borrowing confusion from your future self.

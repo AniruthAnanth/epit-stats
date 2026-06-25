@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Cascadia Code';
+  src: url('/CascadiaCode-2407.24/woff2/CascadiaCode.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cascadia Code';
+  src: url('/CascadiaCode-2407.24/woff2/CascadiaCodeItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+:root {
+  --color-text-primary: #000000;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-bg-tertiary: #f6f8fa;
+  --color-border: #e1e4e8;
+  --color-border-light: #e5e7eb;
+  --color-link: #2563eb;
+  --color-code-bg: #f3f4f6;
+  --color-aside-bg: #f5f5f5;
+  --color-aside-border: #999999;
+  --color-aside-text: #666666;
+}
+
+.prose {
+  color: var(--color-text-primary);
+}
+
+.prose h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.prose h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.prose h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-primary);
+}
+
+.prose p {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.prose a {
+  color: var(--color-link) !important;
+  text-decoration: underline !important;
+}
+
+.prose a:hover {
+  text-decoration: underline !important;
+}
+
+.prose ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose li {
+  margin-bottom: 0.25rem;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose img {
+  border-radius: 0.375rem;
+  margin: 1rem 0;
+}
+
+.prose video {
+  border-radius: 0.375rem;
+  margin: 1rem 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.prose thead {
+  background-color: var(--color-bg-secondary);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.prose th {
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid var(--color-border-light);
+  color: var(--color-text-primary);
+}
+
+.prose td {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border-light);
+  color: var(--color-text-primary);
+}
+
+.prose tbody tr:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.prose code {
+  background-color: var(--color-code-bg);
+  color: var(--color-text-primary);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: 'Cascadia Code', Consolas, 'Courier New', monospace;
+}
+
+.prose pre {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+  border: 1px solid var(--color-border);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+  border: none;
+  border-radius: 0;
+}
+
+.prose pre > code {
+  display: block;
+  font-family: 'Cascadia Code', Consolas, 'Courier New', Monaco, monospace;
+}
+
+.prose code[data-line-numbers] {
+  counter-reset: line;
+}
+
+.prose code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: #6e7781;
+}
+
+.aside-column {
+  position: relative;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .aside-column {
+    display: none;
+  }
+}
+
+.aside-marker {
+  height: 0;
+  overflow: visible;
+}
+
+.aside-content {
+  background-color: var(--color-aside-bg);
+  border-left: 4px solid var(--color-aside-border);
+  padding: 1rem;
+  color: var(--color-aside-text);
+  font-style: italic;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.aside-content p {
+  margin-bottom: 0.5rem;
+  color: var(--color-aside-text);
+}
+
+.aside-content p:last-child {
+  margin-bottom: 0;
+}
+
+.aside-content a {
+  color: var(--color-link) !important;
+  text-decoration: underline !important;
+}
+
+.aside-content a:hover {
+  text-decoration: underline !important;
+}
+
+
