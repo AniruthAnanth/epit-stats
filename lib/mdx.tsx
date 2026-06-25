@@ -9,6 +9,8 @@ import rehypeKatex from 'rehype-katex';
 import Aside from '@/components/Aside';
 import ChapterNav from '@/components/ChapterNav';
 import CodeBlock from '@/components/CodeBlock';
+import MDXImage from '@/components/MDXImage';
+import MDXVideo from '@/components/MDXVideo';
 
 const contentDirectory = path.join(process.cwd(), 'content');
 
@@ -43,6 +45,8 @@ export async function getChapter(slug: string) {
       Aside,
       ChapterNav,
       pre: CodeBlock,
+      img: MDXImage,
+      video: MDXVideo,
     },
   });
 
