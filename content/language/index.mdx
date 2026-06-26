@@ -6,7 +6,7 @@ order: 1
 date: June 25th, 2026
 ---
 
-If the last chapter was about setting up your kitchen, this one is about learning to cook. We're going to cover the absolute fundamentals of Python—how to store values, what kinds of values exist, and how to make your code make decisions. None of this is specific to statistics. It's just the grammar you need before you can say anything interesting.
+If the last chapter was setting up your kitchen, this one is learning to cook. We're covering the absolute fundamentals of Python—how to store values, what kinds of values exist, and how to make your code make decisions. None of this is specific to statistics. It's just the grammar you need before you can say anything interesting.
 
 ## Variables
 
@@ -39,7 +39,7 @@ The old value is just gone. Python doesn't complain.
 
 ## Types
 
-Every value in Python has a **type.** a category that describes what kind of thing it is. The ones you'll use constantly:
+Every value in Python has a **type**—a category that describes what kind of thing it is. The ones you'll use constantly:
 
 | Type | Example | What it is |
 |---|---|---|
@@ -106,7 +106,7 @@ ages = [34, 28, 45, 51, 39]
 diagnoses = ["hypertension", "diabetes", "COPD"]
 ```
 
-You access individual items by their **index.** their position in the list. Python starts counting at zero:
+You access individual items by their **index**—their position in the list. Python starts counting at zero:
 
 ```python
 print(ages[0])   # 34
@@ -181,7 +181,7 @@ Inside your `if` statements, you'll use these:
 | `<=` | Less than or equal to |
 
 <Aside>
-`=` and `==` are completely different things. `=` assigns a value to a variable. `==` checks whether two things are equal. Writing `if age = 65` instead of `if age == 65` is a syntax error Python will catch, but confusing the two is extremely common early on.
+`=` and `==` are completely different. `=` assigns a value to a variable. `==` checks whether two things are equal. Writing `if age = 65` instead of `if age == 65` is a syntax error Python will catch, but confusing the two is extremely common early on.
 </Aside>
 
 You can combine conditions with `and` and `or`:
@@ -233,7 +233,7 @@ for i in range(5):
 
 ### While Loops
 
-A `for` loop runs once for each item in a list. A `while` loop runs for as long as a condition is true:
+A `for` loop runs once for each item in a list. A `while` loop runs as long as a condition is true:
 
 ```python
 count = 0
@@ -262,11 +262,11 @@ while True:
 
 If you accidentally run one, `Ctrl + C` in the terminal will kill it.
 
-In practice, you'll use `for` loops far more often than `while` loops. A `while` loop is useful when you don't know ahead of time how many times you need to repeat something—waiting for a file to finish downloading, retrying a failed request, or running a simulation until it converges. For iterating over data, stick to `for`.
+In practice, you'll use `for` loops far more often than `while`. A `while` loop is useful when you don't know ahead of time how many times you need to repeat something—waiting for a file to finish downloading, retrying a failed request, running a simulation until it converges. For iterating over data, stick to `for`.
 
 ### To Loop or Not To Loop?
 
-Loops are powerful but slow in Python, especially on large datasets. Most of the time when you're working with data, you'll use library functions that operate on entire columns at once—we'll get to that in the next chapter. For now, just know that if you find yourself writing a loop to compute something on every row of a dataset, there's probably a faster way.
+Loops are powerful but slow in Python, especially on large datasets. When you're working with data, you'll usually use library functions that operate on entire columns at once—we'll get to that in the next chapter. For now, just know that if you find yourself writing a loop to compute something on every row of a dataset, there's probably a faster way.
 
 ## Functions
 
@@ -279,7 +279,7 @@ def bmi(weight_kg, height_m):
     return weight_kg / (height_m ** 2)
 ```
 
-`def` tells Python you're defining a function. `bmi` is the name. `weight_kg` and `height_m` are **parameters.** the inputs the function expects. The `return` line sends a value back to whoever called the function.
+`def` tells Python you're defining a function. `bmi` is the name. `weight_kg` and `height_m` are **parameters**—the inputs the function expects. The `return` line sends a value back to whoever called the function.
 
 Call it like this:
 
@@ -293,6 +293,42 @@ Functions are the primary way you avoid repeating yourself. If you're copying an
 <Aside>
 `**` is Python's exponentiation operator. `height_m ** 2` means height squared. `2 ** 10` is 1024.
 </Aside>
+
+### Calling Functions
+
+The **parentheses** are what actually call the function. Without them, you're just referring to the function itself:
+
+```python
+print(bmi)        # <function bmi at 0x...>  (just the function object)
+print(bmi(70, 1.75))  # 22.86  (actually calls it and prints the result)
+```
+
+When you call a function, the arguments you pass in get matched to the parameters in order:
+
+```python
+bmi(70, 1.75)   # weight_kg=70, height_m=1.75
+```
+
+You can also use **keyword arguments** to name them explicitly:
+
+```python
+bmi(weight_kg=70, height_m=1.75)
+bmi(height_m=1.75, weight_kg=70)   # order doesn't matter now
+```
+
+This is especially useful when a function has many parameters or when the meaning isn't obvious from position alone.
+
+You can also give parameters **default values**:
+
+```python
+def greet(name, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+greet("Alice")              # Hello, Alice!
+greet("Bob", "Good morning")  # Good morning, Bob!
+```
+
+If you don't pass a value for `greeting`, it uses `"Hello"`. If you do, it uses what you gave it.
 
 A function doesn't have to return anything. Sometimes you just want to package up a sequence of steps:
 
@@ -366,18 +402,18 @@ A few things here you haven't seen yet: tuples (the parentheses inside the list)
 
 ### Python has Grammar
 
-Every language—spoken or programming—has a grammar. Python's is small. In fact, almost everything you'll ever write in Python is a combination of just a few things:
+Every language—spoken or programming—has a grammar. Python's is small. Almost everything you'll ever write in Python is a combination of just a few things:
 
-- **Values.** the nouns. Numbers, strings, booleans, lists.
-- **Expressions.** combinations of values that evaluate to something. `age + 1`, `bmi > 30`, `"Patient: " + name`.
-- **Statements.** the sentences. Assignment, `if`, `for`, `def`. They don't produce a value, they *do* something.
-- **Functions.** reusable named chunks of statements.
+- **Values**—the nouns. Numbers, strings, booleans, lists.
+- **Expressions**—combinations of values that evaluate to something. `age + 1`, `bmi > 30`, `"Patient: " + name`.
+- **Statements**—the sentences. Assignment, `if`, `for`, `def`. They don't produce a value, they *do* something.
+- **Functions**—reusable named chunks of statements.
 
 That's most of it. The rest is just learning which words Python uses for what. When something confuses you, try to identify which of these four things it is. It usually helps.
 
 ### Lifting the Hood: How does Python work?
 
-If you ever want to understand what's actually happening when Python runs your code—how it reads your text file, what it does with all those variables, why types exist at all—Robert Nystrom's [Crafting Interpreters](https://craftinginterpreters.com/) is the best resource I've ever read on the subject. It's free online, beautifully written, and builds a working programming language from scratch. It's well outside the scope of this course, but if you finish these chapters and find yourself curious about what's underneath, that's where to go.
+If you want to understand what's actually happening when Python runs your code—how it reads your text file, what it does with all those variables, why types exist—Robert Nystrom's [Crafting Interpreters](https://craftinginterpreters.com/) is the best resource I've read on the subject. It's free online, beautifully written, and builds a working programming language from scratch. Well outside the scope of this course, but if you finish these chapters and find yourself curious about what's underneath, that's where to go.
 
 ### Using ChatGPT for Syntax
 

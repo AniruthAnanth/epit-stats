@@ -1,0 +1,250 @@
+---
+title: "Supplementary: Programming Paradigms"
+description: Different ways to organize code, and why it matters
+module: 0
+order: 3
+date: June 26th, 2026
+---
+
+By now you can write functions, loop over data, and make decisions with conditionals. But there's a bigger question lurking underneath: how should you organize all of this? There are different schools of thought—different **paradigms**—and Python supports most of them. This chapter walks through the main ones you'll encounter.
+
+## Procedural Programming
+
+This is what we've been doing so far. You write a sequence of steps, one after another, top to bottom. You break repeated logic into functions. You use variables to keep track of state.
+
+```python
+def load_data(filename):
+    # open file, read lines, return data
+    pass
+
+def clean_data(data):
+    # remove missing values, fix formats
+    pass
+
+def analyze_data(data):
+    # calculate statistics
+    pass
+
+# Main execution
+data = load_data("patients.csv")
+data = clean_data(data)
+results = analyze_data(data)
+print(results)
+```
+
+This is **procedural programming**. It's straightforward, easy to read, and maps well to how you think about solving a problem step by step. Languages like C, early versions of Python, and most scripting languages lean heavily into this style.
+
+For data analysis and statistics work, procedural code is often the clearest way to express what you're doing. You load data, clean it, transform it, visualize it. The steps follow each other naturally.
+
+## Object-Oriented Programming
+
+Object-oriented programming (OOP) organizes code around **objects**—bundles of data and the functions that operate on that data.
+
+In Python, you create objects using **classes**:
+
+```python
+class Patient:
+    def __init__(self, name, age, diagnosis):
+        self.name = name
+        self.age = age
+        self.diagnosis = diagnosis
+    
+    def summary(self):
+        return f"{self.name}, {self.age}, {self.diagnosis}"
+    
+    def is_geriatric(self):
+        return self.age >= 65
+
+# Create instances
+patient1 = Patient("Alice", 67, "hypertension")
+patient2 = Patient("Bob", 45, "diabetes")
+
+print(patient1.summary())       # Alice, 67, hypertension
+print(patient1.is_geriatric())  # True
+```
+
+The `Patient` class groups together all the data about a patient (`name`, `age`, `diagnosis`) and the operations you might want to perform on that data (`summary()`, `is_geriatric()`).
+
+<Aside>
+`__init__` is a special method Python calls when you create a new instance of a class. `self` refers to the specific instance you're working with. Every method in a class takes `self` as its first parameter, but you don't pass it explicitly—Python does that for you.
+</Aside>
+
+### Methods vs Functions
+
+A **method** is just a function that belongs to an object. When you call `patient1.summary()`, you're calling the `summary` method on the `patient1` object. The syntax `object.method()` is how you access methods.
+
+Methods can access the object's data through `self`:
+
+```python
+def is_geriatric(self):
+    return self.age >= 65   # can access self.age
+```
+
+Functions, on the other hand, are standalone:
+
+```python
+def is_geriatric(age):
+    return age >= 65   # needs age passed in explicitly
+```
+
+The difference is mostly organizational. Methods keep related behavior close to the data it operates on.
+
+### When to Use OOP
+
+Object-oriented programming shines when you have complex entities with lots of behavior attached. If you're building a simulation where patients move through a healthcare system, interact with providers, accumulate treatments, and have changing states, bundling all that into a `Patient` class starts to make sense.
+
+For data analysis? Usually overkill. You'll use OOP when working with libraries—pandas DataFrames are objects, matplotlib figures are objects—but you won't often write your own classes unless you're building tools for others to use.
+
+Languages that push OOP hard: **Java**, **C#**, **Ruby**. Python sits in the middle—it supports OOP fully but doesn't force it.
+
+## Functional Programming
+
+Functional programming treats computation as the evaluation of mathematical functions. Key ideas: avoid changing state, pass data through a series of transformations, treat functions as values you can pass around.
+
+```python
+def add_ten(x):
+    return x + 10
+
+def multiply_two(x):
+    return x * 2
+
+def compose(f, g):
+    return lambda x: f(g(x))
+
+# Compose functions together
+transform = compose(multiply_two, add_ten)
+print(transform(5))   # (5 + 10) * 2 = 30
+```
+
+In pure functional programming, you don't mutate variables—you create new ones. You don't loop—you use recursion or higher-order functions like `map`, `filter`, and `reduce`.
+
+Python has functional features but isn't a functional language. You'll see functional patterns occasionally:
+
+```python
+ages = [23, 45, 67, 34, 78]
+
+# Filter to geriatric patients
+geriatric = list(filter(lambda age: age >= 65, ages))
+print(geriatric)   # [67, 78]
+
+# Map ages to categories
+categories = list(map(
+    lambda age: "senior" if age >= 65 else "adult", ages))
+print(categories)   # ['adult', 'adult', 'senior', 'adult', 'senior']
+```
+
+This works, but honestly? A list comprehension is usually clearer:
+
+```python
+geriatric = [age for age in ages if age >= 65]
+categories = ["senior" if age >= 65 else "adult" for age in ages]
+```
+
+Languages that are deeply functional: **Haskell**, **OCaml**, **Elixir**, **Clojure**. **Rust** borrows a lot of functional ideas (immutability by default, pattern matching, no null) while still being a systems language.
+
+<Aside>
+If you're curious about functional programming, Haskell is the pure version—no mutable state, lazy evaluation, strong type system. It's beautiful and frustrating in equal measure. [Learn You a Haskell](http://learnyouahaskell.com/) is a gentle introduction.
+</Aside>
+
+## Declarative vs Imperative
+
+Another way to slice this: **imperative** programming tells the computer *how* to do something step by step. **Declarative** programming tells it *what* you want and lets the system figure out how.
+
+Imperative (procedural):
+
+```python
+total = 0
+for age in ages:
+    if age >= 65:
+        total += 1
+print(total)
+```
+
+Declarative (functional):
+
+```python
+print(sum(1 for age in ages if age >= 65))
+```
+
+Or even more declarative, with SQL:
+
+```sql
+SELECT COUNT(*) FROM patients WHERE age >= 65;
+```
+
+SQL is one of the most successful declarative languages. You describe what data you want, and the database engine figures out the most efficient way to get it.
+
+## Mixing Paradigms
+
+In practice, you'll mix these constantly. Python makes it easy.
+
+You might write mostly procedural code but use list comprehensions (functional-ish) and occasionally define a class when it makes sense (object-oriented). A typical data analysis script might look like:
+
+```python
+import pandas as pd
+
+# Procedural: load and transform data
+df = pd.read_csv("patients.csv")
+df = df[df['age'] >= 18]
+
+# Object-oriented: DataFrame is an object with methods
+df['bmi'] = df['weight_kg'] / (df['height_m'] ** 2)
+
+# Functional-ish: apply a transformation
+df['category'] = df['bmi'].apply(
+    lambda x: "overweight" if x >= 25 else "normal")
+
+# Procedural again: aggregate and print
+print(df.groupby('category').size())
+```
+
+None of this is a problem. Use what makes the code clearest.
+
+## What Works for Us
+
+For this course—statistical thinking, data analysis, visualization—a **procedural style with functional touches** will serve you best. Write clear functions that take inputs and return outputs. Use pandas and numpy methods (which are object-oriented under the hood, but you mostly call them like functions). Avoid writing your own classes unless you have a good reason.
+
+The main thing is to stay explicit. If you find yourself deeply nesting function calls or writing clever one-liners that take five minutes to parse, you've gone too far. Write code that someone else (or you, six months from now) can read and understand immediately.
+
+<Aside>
+If you end up doing a lot of Python professionally, you'll eventually need to get comfortable with classes—especially for building APIs, frameworks, or reusable tools. But for exploratory data work? Functions and simple data structures get you surprisingly far.
+</Aside>
+
+## Going Deeper
+
+### The Zen of Python
+
+Python has opinions baked in. Open a Python shell and type `import this`. You'll get a list of aphorisms—"The Zen of Python"—written by Tim Peters. The most relevant ones for code organization:
+
+- **Explicit is better than implicit.** Don't hide what your code is doing.
+- **Simple is better than complex.** Solve the problem directly.
+- **Readability counts.** Code is read more often than it's written.
+- **There should be one—and preferably only one—obvious way to do it.** Unlike Perl, Python prefers one clear approach over many clever ones.
+
+### Languages and Their Paradigms
+
+If you want to see how different languages approach these ideas:
+
+- **C** — Pure procedural. No classes, no closures, just functions and structs. Fast, low-level, unforgiving.
+- **Java** — Everything is a class. Even a simple "hello world" requires a class definition. Great for large teams and enterprise systems, verbose for quick scripts.
+- **Rust** — Systems programming with functional influences. Memory safety without garbage collection. Steep learning curve but extremely powerful. [The Rust Book](https://doc.rust-lang.org/book/) is excellent.
+- **Haskell** — Pure functional. Immutable by default, lazy evaluation, extremely strong type system. Mind-bending if you're used to imperative code.
+- **JavaScript** — Multi-paradigm like Python, but runs in browsers. Functional features (map, reduce, closures) are common. Also has classes, though they're syntactic sugar over prototypes.
+- **R** — Functional at its core. Everything is a vector, functions are first-class, side effects are common. Built for statistics, shows its age in places.
+
+You don't need to learn any of these right now. But knowing they exist and what they prioritize gives you vocabulary for thinking about code design.
+
+### When to Use Classes in Python
+
+A few signs you might want a class:
+
+- You have a bundle of related data that you pass around together constantly
+- The data has behavior attached that doesn't make sense as standalone functions
+- You need to maintain state over time (a simulation, a game, a stateful API client)
+- You're building a library or tool for others to use
+
+A sign you don't need a class:
+
+- You're trying to organize code and a few well-named functions would work fine
+
+When in doubt, start procedural. Refactor to OOP if the complexity demands it.

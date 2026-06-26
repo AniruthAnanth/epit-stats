@@ -1,0 +1,145 @@
+---
+title: Development Environments and the Terminal
+description: An opinionated guide to setting up your computer
+module: 0
+order: 0
+date: June 25th, 2026
+---
+
+Before we can visualize data or run statistical analysis, we need somewhere to write code. This chapter gets you set up. By the end, you'll have Python and a code editor installed, and you'll know enough terminal commands to get around.
+
+<Aside>
+Most tutorials and code in this course were designed for Unix systems (Mac/Linux). On Windows you may hit friction. The fix is installing **Windows Subsystem for Linux** (WSL2), which gives you a Linux operating system inside Windows. Optional for now, but if you see weird path errors or a command that works on your peer's Mac fails on yours, come back here. [Microsoft's setup guide](https://learn.microsoft.com/en-us/windows/wsl/install) is a good place to start.
+</Aside>
+
+## The Terminal
+
+Your computer has two interfaces. The one you're used to—windows, icons, clicking—and a text-based one called the terminal. You type a command, hit enter, something happens. We'll use it constantly because most tools in this course live there.
+
+**On a Mac**, open Spotlight (`Cmd + Space`) and search for *Terminal*.
+
+**On Windows**, you want Windows Terminal with PowerShell. Search for it in the Start Menu. If you're on Windows 10 or later, it's either already there or one install away from the Microsoft Store.
+
+Once you've opened your terminal, you should see a blinking cursor. Type this in:
+
+```python
+echo Hello world!
+```
+
+...and hit `Enter`. If you did everything right, your Terminal should now look something like this:
+
+```
+user@computer $ echo Hello world!
+Hello world!
+```
+
+Congratulations—you just interfaced with the terminal!
+
+## Terminal Commands
+
+<Aside>
+Most terminal commands accept **flags**—options you tack on with a dash to change behavior. For example, `ls` lists files, but `ls -l` lists them with details like file size and modification date, and `ls -a` shows hidden files. You can combine them: `ls -la`. Mac users: when you see one you don't recognize, `man ls` (short for "manual") shows full documentation—hit `q` to exit.
+</Aside>
+
+The people who designed terminal commands were not creative. Almost everything is a cryptic abbreviation—`cd` is "change directory", `pwd` is "print working directory", `ls` is "list". There's no real logic to memorize, you just learn them by using them. Here are the ones you'll use constantly:
+
+| Command | Full name | What it does |
+|---|---|---|
+| `pwd` | print working directory | Shows you where you are |
+| `ls` | list | Lists the files and folders here |
+| `cd my-folder` | change directory | Moves you into a specific folder |
+| `cd ..` | change directory (up) | Goes up one level |
+| `mkdir my-folder` | make directory | Creates a new folder |
+
+Here's a full demo of what navigating your computer through the command line looks like:
+
+<video autoPlay loop muted playsInline>
+  <source src="/00-workshop/demo.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+<Aside>
+On Windows, the installer has a checkbox at the bottom that says *"Add Python to PATH"*. Check it before you click install. If you miss it, Python installs fine but nothing can find it.
+</Aside>
+
+## Installing Python
+
+We'll use Python for the entire course. Go to [python.org/downloads](https://python.org/downloads) and grab the latest version for your operating system.
+
+Once it's installed, confirm it worked by opening your terminal and running:
+
+```bash
+python --version
+```
+
+You should see something like `Python 3.12.4`. If you get an error, or it prints `Python 2.x`, try `python3 --version` instead—some machines have an old version hanging around, and `python` points to that instead of the one you just installed. If neither works, go back to [python.org/downloads](https://python.org/downloads) and make sure the install completed without errors.
+
+<Aside>
+Not to be confused with [**Visual Studio**](https://visualstudio.microsoft.com/), VS Code's big brother.
+</Aside>
+
+## Installing VS Code
+
+VS Code is the editor we'll use to write Python. Go to [code.visualstudio.com](https://code.visualstudio.com) and download the version for your OS. Run the installer, click through the defaults.
+
+<Aside>
+If you've heard of **Vim** and are curious—it's a terminal-based text editor from the 70s with a devoted following. The learning curve is steep (famously, many people can't figure out how to close it), but people who know it well swear by it. Outside the scope of this course, but if you want to go down that road, [vim-adventures.com](https://vim-adventures.com) is a fun place to start.
+</Aside>
+
+Once it's open, you'll want the Python extension. Click the Extensions icon in the left sidebar (or `Cmd+Shift+X` on Mac, `Ctrl+Shift+X` on Windows), search for **Python**, and install the one by Microsoft. This gives you syntax highlighting, autocomplete, and the ability to run code from the editor.
+
+## Your First Script
+
+Let's make sure everything works end to end. Open VS Code, create a new file called `hello.py`, and type this in:
+
+```python
+print("Hello, world!")
+```
+
+Save it. Now open your terminal, navigate to the folder where you saved it, and run:
+
+```bash
+python hello.py
+```
+
+You should see `Hello, world!` printed in the terminal. That's it—you just wrote and ran a Python script. We'll get into what `print()` actually means and how Python syntax works in the next chapter. For now, the important thing is that the whole pipeline worked: you wrote code in an editor and ran it from the command line.
+
+<Aside>
+I'm also a huge advocate for using the VS Code integrated terminal! Not all terminal applications are immediately compatible, but if you hate constantly switching between windows it's very much worth your while.
+</Aside>
+
+## Optional
+
+### Nicer Terminals
+
+The default terminal on Mac and Windows works fine, but if you spend a lot of time there it's worth upgrading.
+
+On Mac, **iTerm2** ([iterm2.com](https://iterm2.com)) is the standard choice. It has split panes, better search, and a lot of small quality-of-life improvements. Pair it with **oh-my-zsh** ([ohmyz.sh](https://ohmyz.sh)) to get a shell that shows you which Git branch you're on and how long the last command took.
+
+On Windows, **Windows Terminal** (which you may already have) is already a significant upgrade over Command Prompt. If you installed WSL2, Windows Terminal lets you switch between PowerShell and your Linux shell in tabs.
+
+### Anaconda
+
+If you work with a lot of different Python projects, you'll eventually run into **dependency conflicts**—project A needs version 1.0 of some library, project B needs version 2.0, and they can't both be installed at the same time. **Anaconda** ([anaconda.com](https://anaconda.com)) is a Python distribution that comes with a package and environment manager called `conda` built in, which handles this cleanly.
+
+It also comes pre-installed with most scientific Python libraries we'll use in this course—numpy, pandas, matplotlib, and others—so you skip a few install steps.
+
+Not required, and we won't assume you have it, but if you're going to do a lot of data work it's worth knowing it exists. The [getting started guide](https://docs.anaconda.com/anaconda/getting-started/) is straightforward.
+
+### Further Reading
+
+<Aside>
+If you're curious about the Vim vs VS Code debate, [this piece](https://confidence.sh/blog/vim-vs-vscode-developer-productivity/) makes a fair case for Vim's advantages—mainly speed, portability, and the fact that it runs anywhere over SSH. The [Hacker News thread](https://news.ycombinator.com/item?id=24560863) on someone switching away from Vim after two decades is also worth skimming for a more skeptical take.
+</Aside>
+
+No one learns this stuff in one sitting. Here are the resources I found myself coming back to when I was getting started.
+
+**For Python syntax.** [W3Schools Python](https://www.w3schools.com/python/) is not glamorous but genuinely useful as a reference. If you forget how a for loop works or can't remember the syntax for a dictionary, it's the fastest place to look it up.
+
+**When you're stuck.** [Stack Overflow](https://stackoverflow.com) is where almost every programming question has already been asked and answered. Search for your error message in quotes. Odds are someone hit the exact same wall in 2014 and there are twelve answers explaining why.
+
+**AI assistants.** ChatGPT and Claude are surprisingly good at debugging code and explaining error messages. Paste your code and the error you're getting and ask what's wrong. Don't use them to write code you don't understand yet—you'll accumulate confusion fast—but as a debugging partner they're hard to beat.
+
+**Navigating the filesystem.** [Ryan's Linux Tutorial](https://ryanstutorials.net/linuxtutorial/navigation.php) is the clearest walkthrough I've found on how paths, directories, and navigation actually work. Worth reading even if you're on a Mac.
+
+**Python documentation.** [docs.python.org](https://docs.python.org/3/) is the official reference. Dense but authoritative. Once you're past the basics, get comfortable searching it.
