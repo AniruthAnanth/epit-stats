@@ -36,11 +36,11 @@ export async function getChapter(slug: string) {
       mdxOptions: {
         remarkPlugins: [
           remarkGfm,
-          [remarkMath, { singleDollarTextMath: false }]
+          remarkMath,
         ],
         rehypePlugins: [
           rehypeHighlight,
-          [rehypeKatex, { strict: false, trust: true }],
+          rehypeKatex,
         ],
       },
     },

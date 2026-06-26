@@ -131,6 +131,8 @@ body {
   border-radius: 0.25rem;
   font-size: 0.875em;
   font-family: var(--font-cascadia-code), Consolas, 'Courier New', monospace;
+  font-variant-ligatures: none;
+  font-feature-settings: "calt" 0, "liga" 0;
 }
 
 .prose pre {
@@ -156,6 +158,8 @@ body {
 .prose pre > code {
   display: block;
   font-family: var(--font-cascadia-code), Consolas, 'Courier New', Monaco, monospace;
+  font-variant-ligatures: none;
+  font-feature-settings: "calt" 0, "liga" 0;
 }
 
 .prose code[data-line-numbers] {
